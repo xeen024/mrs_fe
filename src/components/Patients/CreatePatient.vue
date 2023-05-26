@@ -207,8 +207,7 @@ export default {
           brgy: null,
           city: '',
           province: '',
-          country: '',
-          phic_no: '',
+          country: ''
         },
         med_form: {
           patient_id: '',
@@ -277,12 +276,13 @@ export default {
       //   })
       // },
       onSubmit(event) {
+        var endPoint = ''
         event.preventDefault()
         console.log('domain_urlss', apiUrl);
         if (this.createUser) {
-          var endPoint = 'create_patient'
+          endPoint = 'create_patient'
         }else{
-          var endPoint = 'update_patient'
+          endPoint = 'update_patient'
         }
         axios.post(apiUrl+endPoint, this.form).then(response=>{
           console.log('response', response);
