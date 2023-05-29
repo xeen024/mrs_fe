@@ -1,8 +1,17 @@
 <template>
   <div>
   <div v-if="!showDetails">
-    <div>
+    <div class="table--header-search">
       <b-button variant="outline-primary" v-b-modal.create-patient>New Patient</b-button>
+      <b-input-group
+        class="mb-3"
+        prepend="Label"
+      >
+        <b-form-input></b-form-input>
+        <b-input-group-append>
+          <b-button size="sm" text="Button" variant="success">Button</b-button>
+        </b-input-group-append>
+      </b-input-group>
     </div>
     <b-modal id="create-patient" size="lg" title="Patient Information" hide-footer>
       <CreatePatient 
@@ -78,3 +87,9 @@ export default {
     }
   }
 </script>
+<style lang="scss">
+.table--header-search{
+  display: flex;
+  justify-content: space-between;
+}
+</style>
