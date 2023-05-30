@@ -11,6 +11,12 @@
       <b-form @submit="onSave" @reset="onReset" v-if="showMedForm">
         <b-row>
           <b-col md="6" sm="12">
+            DATE: {{ med_form.created_at }}
+          </b-col>
+          
+        </b-row>
+        <b-row>
+          <b-col md="6" sm="12">
             <b-form-group label="Select Type of Consultation" label-for="type">
               <b-form-select v-model="med_form.type" class="mb-3">
                 <b-form-select-option :value="null">Please select an option</b-form-select-option>

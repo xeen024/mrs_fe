@@ -3,7 +3,6 @@
     <div v-if="isLoggedIn">
       <!-- <h1>login page</h1> -->
       <div class="login-container">
-        
         <div class="login-container-wrapper">
           <div class="logo-cms">
             <img src="img/mrs-logo.png" alt="hsfeo logo" width="220" height="210">
@@ -50,7 +49,8 @@
           fixed="top"
         >
           <b-navbar-nav style="text-align:right;">
-            <b-nav-item class="user-name" @click="logoutUser"> {{ user }} | Logout</b-nav-item>
+            <b-nav-item class="user-name" @click="logoutUser"> {{ user }} | Logout </b-nav-item>
+            <b-nav-item> {{ date_today }} </b-nav-item>
           </b-navbar-nav>
         </b-navbar>
       </template>
@@ -61,7 +61,6 @@
         </b-container>
       </template>
     </BootstrapSidebar>
-    <div>d;slkf;kslk;k</div>
   </div>
   </div>
   
@@ -91,6 +90,7 @@ export default {
   },
   mounted() {
     console.log('this is before mount');
+    this.getDateToday()
     if (localStorage.getItem('user_id')) {
       this.isLoggedIn = false
       this.getCurrentUser(localStorage.getItem('user_id'))
@@ -100,6 +100,7 @@ export default {
       // this.$router.push('/')
       return;
     }
+
   },
   data() {
     return {
@@ -107,6 +108,7 @@ export default {
         email : '',
         password: ''
       },
+      date_today: '',
       user:'',
       error_msg: [],
       isLoggedIn: '',
@@ -141,6 +143,13 @@ export default {
   },
   methods: {
     onSidebarChanged() {},
+    getDateToday(){
+      var date = moment();
+
+      var currentDate = date.format('MMMM D, YYYY');
+      console.log('currentDate', currentDate);
+      this.date_today = currentDate
+    },
     getCurrentUser(id){
       console.log('get current user');
       axios.get(apiUrl+'get_current_user/'+id).then(response=>{

@@ -2,16 +2,20 @@
   <div>
   <div v-if="!showDetails">
     <div class="table--header-search">
-      <b-button variant="outline-primary" v-b-modal.create-patient>New Patient</b-button>
-      <b-input-group
+      <div>
+        <b-button variant="outline-primary" v-b-modal.create-patient>New Patient</b-button>
+      </div>
+      <div>
+        <b-input-group
         class="mb-3"
-        prepend="Label"
+        prepend="Search by Firstname or Lastname only"
       >
-        <b-form-input></b-form-input>
+        <b-form-input v-model="search_item"></b-form-input>
         <b-input-group-append>
-          <b-button size="sm" text="Button" variant="success">Button</b-button>
+          <b-button size="sm" text="Button" variant="success" @click="searchPatient">Search</b-button>
         </b-input-group-append>
       </b-input-group>
+      </div>
     </div>
     <b-modal id="create-patient" size="lg" title="Patient Information" hide-footer>
       <CreatePatient 
@@ -50,6 +54,7 @@ export default {
       return {
         patient_id: '',
         showDetails: false,
+        search_item: '',
         items: [],
         // items: [
         //   { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
@@ -63,6 +68,20 @@ export default {
       this.getAllData()
     },
     methods: {
+      searchPatient(){
+        console.log('this.search_item', this.search_item);
+        if (!this.search_item) {
+          this.getAllData()
+        }else{
+          axios.get(apiUrl+'search_patient/'+this.search_item).then(response=>{
+            console.log('response', response);
+            if (response.data?.results) {
+              this.items = response.data?.results
+            }
+          })
+        }
+        
+      },
       getAllData(){
         console.log('getting all');
         axios.get(apiUrl+'get_all_patients').then(response=>{
